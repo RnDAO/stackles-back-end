@@ -1,5 +1,8 @@
 import express, { response, request } from 'express';
 import mongoose from 'mongoose';
+import userRouter from './Routes/userRoutes';
+
+
 // import apiRouter from './Routers/apiRoutes';
 
 const app: express.Application = express();
@@ -16,7 +19,12 @@ app.get('/', (req: express.Request, res: express.Response)=>{
     })
 })
 
-// app.use('/api',apiRouter);
+app.use('/user',userRouter);
+
+
+
+
+
 
 app.listen(port, ()=>{
     console.log(`Server running at http://localhost:${port}/`);
