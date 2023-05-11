@@ -23,5 +23,5 @@ const OrganisationSchema = new mongoose.Schema({
 // Define the model
 const Organisation = mongoose.model<IOrganisation>('Organisation', OrganisationSchema);
 
-// export the user and iuser
+// export the Organisation and IOrganisation
 export {Organisation, IOrganisation};

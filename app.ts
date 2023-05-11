@@ -1,6 +1,7 @@
 import express, { response, request } from 'express';
 import mongoose from 'mongoose';
 import userRouter from './Routes/userRoutes';
+import orgRouter from './Routes/orgRoutes';
 
 
 // import apiRouter from './Routers/apiRoutes';
@@ -20,6 +21,7 @@ app.get('/', (req: express.Request, res: express.Response)=>{
 })
 
 app.use('/user',userRouter);
+app.use ('/org', orgRouter);
 
 
 

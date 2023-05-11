@@ -1,27 +1,51 @@
 import express, { NextFunction, Request, Response } from 'express';
-import Web3 from 'web3';
+import {User, IUser} from '../Models/User';
+import jwt from 'jsonwebtoken';
+import { IGetUserAuthInfoRequest } from '../definition';
+//
 
-function authenticate(providerUrl: string) {
-  const web3 = new Web3(providerUrl);
+// interface AuthenticatedRequest extends Request {
+//   user: IUser | null | undefined;
+// }
 
-  return function(req: Request, res: Response, next: NextFunction) {
-    const address = req.headers['x-ethereum-address'] as string;
-    if (!address) {
-      return res.status(401).json({ error: 'Authentication required' });
-    }
-
-    web3.eth.getAccounts()
-      .then((accounts) => {
-        if (accounts.includes(address)) {
-          req.user = { address };
-          next();
-        } else {
-          res.status(401).json({ error: 'Invalid authentication' });
+const JWT_SECRET = "alwaysnoteverything";
+const auth = async (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction)=>{
+     try {
+      const token = req.cookies.token;
+      if(!token){
+          res.status(401).json({
+              message: 'Unauthorized'
+          })
+      }
+      else{
+        const decoded : any = jwt.verify(token, JWT_SECRET);
+        const email: string   = decoded.email;
+        if(email){
+          // find user by email 
+          const user = await User.findOne({email: email});
+          if(user){
+            req.user = user;
+          }
+          else{
+            res.status(401).json({
+              message: 'Unauthorized'
+            })
+          }
         }
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).json({ error: 'Internal server error' });
-      });
-  };
+
+        next();
+      }
+
+     } catch (error) {
+          res.status(500).json({
+              message: 'Internal server error - auth middleware',
+              error: error
+          })
+      
+     }
+
 }
+
+
+
+export  {auth};

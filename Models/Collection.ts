@@ -25,5 +25,5 @@ const CollectionSchema = new mongoose.Schema({
 // Define the model
 const Collection = mongoose.model<ICollection>('Collection', CollectionSchema);
 
-// export the user and iuser
+// export the Collection and ICollection
 export {Collection, ICollection};

@@ -1,6 +1,8 @@
 import mongoose, {Model,Document} from "mongoose";
 import jwt from "jsonwebtoken";
 import dotenv from 'dotenv';
+import { IOrganisation } from "./Organisation";
+import { ICollection } from "./Collection";
 
 require('dotenv').config();
 
@@ -10,9 +12,9 @@ require('dotenv').config();
 interface IUser extends mongoose.Document {
     name: string;
     email: string; // also act as wallet address
-    // wallet_address?: string;
-    organization?: string[];
-    collections?: string[];
+   
+    organisations?: IOrganisation[];
+    collections?: ICollection[];
     generateAuthToken(): string;
 }
 
@@ -20,9 +22,9 @@ interface IUser extends mongoose.Document {
 const UserSchema = new mongoose.Schema({
     name: {type: String, required: true},
     email: {type: String, required: true, unique: true}, // also act as wallet address
-    // wallet_address: {type: String, unique: true},
-    organization: {type: [String]},
-    collections: {type: [String]}
+    organisations: [{type: [mongoose.Schema.Types.ObjectId], ref: 'Organisation' }],
+    collections: [{type: [mongoose.Schema.Types.ObjectId], ref: 'Collection' }]
+
 });
 
 // Define the model
