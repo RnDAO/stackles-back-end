@@ -9,7 +9,7 @@ const orgRouter: express.Router = express.Router();
 
 // create organisation route
 
-orgRouter.post('/create', auth, async (req: IGetUserAuthInfoRequest, res: Response)=>{
+orgRouter.post('/create', auth, async (req: any, res: any)=>{
     try {
         const {name} = req.body;
         if(!name){
@@ -52,7 +52,7 @@ orgRouter.post('/create', auth, async (req: IGetUserAuthInfoRequest, res: Respon
 
 // get all organisations route
 
-orgRouter.get('/all', auth, async (req: IGetUserAuthInfoRequest, res: Response)=>{
+orgRouter.get('/all', auth, async (req: any, res: any)=>{
     try {
         const user   = req.user;
         const organisations = await Organisation.find({_id: {$in: user.organisations}});

@@ -1,7 +1,7 @@
 // typings.d.ts
 
 import express from 'express';
-import { IUser } from './Models/User';
+
 
 declare global {
   namespace Express {
@@ -16,8 +16,8 @@ declare module "express" {
   }
 }
 
-// declare module 'express-serve-static-core' {
-//   export interface Request {
-//     user: any
-//   }
-// }
+declare module 'express-serve-static-core' {
+  export interface Request {
+    user: any
+  }
+}

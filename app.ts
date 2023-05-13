@@ -2,15 +2,17 @@ import express, { response, request } from 'express';
 import mongoose from 'mongoose';
 import userRouter from './Routes/userRoutes';
 import orgRouter from './Routes/orgRoutes';
-
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 // import apiRouter from './Routers/apiRoutes';
 
 const app: express.Application = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-
-
+app.use(cors());
+// cookie
+app.use(cookieParser());
 const port: number = 3000;    
 
 
