@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import dotenv from 'dotenv';
 import { IOrganisation } from "./Organisation";
 import { ICollection } from "./Collection";
+import { string } from "zod";
 
 require('dotenv').config();
 
@@ -15,6 +16,10 @@ interface IUser extends mongoose.Document {
    
     organisations?: IOrganisation[];
     collections?: ICollection[];
+    O_requests?: IOrganisation[];
+    // array of collection requests to join like id -> admin or id-> member
+    C_requests?: [ICollection,string][];
+
     generateAuthToken(): string;
 }
 
@@ -23,6 +28,8 @@ const UserSchema = new mongoose.Schema({
     name: {type: String, required: true},
     email: {type: String, required: true, unique: true}, // also act as wallet address
     organisations: [{type: [mongoose.Schema.Types.ObjectId], ref: 'Organisation' }],
+    O_requests: [{type: [mongoose.Schema.Types.ObjectId], ref: 'Organisation' }],
+    C_requests: [{type: [mongoose.Schema.Types.ObjectId,string], ref: 'Collection' }],
     collections: [{type: [mongoose.Schema.Types.ObjectId], ref: 'Collection' }]
 
 });

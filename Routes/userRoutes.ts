@@ -24,7 +24,7 @@ userRouter.post('/login',async (req: Request, res: Response)=>{
                 });
                 await newUser.save();
                 const token = await newUser.generateAuthToken();
-                const options = {expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), httpOnly: true};
+                const options = {expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), httpOnly: true}; // 30 days
                 res.status(200).cookie('token', token, options).json({
                 newUser,
                 message: 'user created and login successful'

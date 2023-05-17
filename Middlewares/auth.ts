@@ -26,7 +26,7 @@ const auth = async (req : any, res: any, next: any)=>{
         if(email){
           // find user by email 
           const user = await User.findOne({email: email});
-          console.log(user);
+          // console.log(user);
           if(user){
             req.user = user;
           }
