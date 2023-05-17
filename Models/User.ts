@@ -27,10 +27,10 @@ interface IUser extends mongoose.Document {
 const UserSchema = new mongoose.Schema({
     name: {type: String, required: true},
     email: {type: String, required: true, unique: true}, // also act as wallet address
-    organisations: [{type: [mongoose.Schema.Types.ObjectId], ref: 'Organisation' }],
-    O_requests: [{type: [mongoose.Schema.Types.ObjectId], ref: 'Organisation' }],
+    organisations: [{type: mongoose.Schema.Types.ObjectId, ref: 'Organisation' }],
+    O_requests: [{type: mongoose.Schema.Types.ObjectId, ref: 'Organisation' }],
     C_requests: [{type: [mongoose.Schema.Types.ObjectId,string], ref: 'Collection' }],
-    collections: [{type: [mongoose.Schema.Types.ObjectId], ref: 'Collection' }]
+    collections: [{type: mongoose.Schema.Types.ObjectId, ref: 'Collection' }]
 
 });
 

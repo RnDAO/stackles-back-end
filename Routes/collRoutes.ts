@@ -4,12 +4,13 @@ import { Request, Response } from 'express';
 import { auth } from '../Middlewares/auth';
 import { Organisation } from '../Models/Organisation';
 import { Collection } from '../Models/Collection';
+import { User } from '../Models/User';
 
-const collRouter = express.Router();
+const collRouter : express.Router = express.Router();
 
 
 // create a collection
-collRouter.post('/create/:id',auth, async (req: Request, res: Response)=>{
+collRouter.post('/create/:id',auth, async (req: any, res: any)=>{
         
         try {
             const {name, description} = req.body;
@@ -20,7 +21,7 @@ collRouter.post('/create/:id',auth, async (req: Request, res: Response)=>{
                 })
             }else{
                // check if collection already exists
-                const collection = await Collection.findOne({name: name, organisation: organisation});
+                const collection = await Collection.findOne({name: name, organisation: org});
                 if(collection){
                     res.status(400).json({
                         message: 'Collection already exists'
@@ -39,10 +40,30 @@ collRouter.post('/create/:id',auth, async (req: Request, res: Response)=>{
                                 name: name,
                                 creator : req.user._id,
                                 organisation: organisation._id,
-                                description: description
+                                description: description,
+                                admins : [req.user._id]
 
                             });
                             await newCollection.save();
+                            // add the collection to the organisation
+                            if(organisation.collections){
+                                organisation.collections.push(newCollection._id);
+                            }else{
+                                organisation.collections = [newCollection._id];
+                            }
+                            await organisation.save();
+                          
+                            // find user and add the collection to the user
+                            const user = await User.findById(req.user._id);
+                            if(user){
+                            if(user.collections){
+                                user.collections.push(newCollection._id);
+                            }else{
+                                user.collections = [newCollection._id];
+                            }
+                            await user.save();
+                           
+                        }
                             res.status(200).json({
                                 newCollection,
                                 message: 'Collection created successfully'
@@ -65,6 +86,10 @@ collRouter.post('/create/:id',auth, async (req: Request, res: Response)=>{
         
     }
 )
+
+
+// 
+
 
 
 

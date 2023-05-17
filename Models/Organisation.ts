@@ -18,9 +18,9 @@ const OrganisationSchema = new mongoose.Schema({
     name: {type: String, required: true},
     creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     admins: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-    members: [{type: [mongoose.Schema.Types.ObjectId], ref: 'User' }],
-    collections: [{type: [mongoose.Schema.Types.ObjectId], ref: 'Collection' }],
-    requests: [{type: [mongoose.Schema.Types.ObjectId], ref: 'User' }]
+    members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    collections: [{type: mongoose.Schema.Types.ObjectId, ref: 'Collection' }],
+    requests: [{type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });
 
 // Define the model
