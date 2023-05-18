@@ -1,6 +1,7 @@
 import express from 'express';
 import { Request, Response } from 'express';
 import {User, IUser} from '../Models/User';
+import { auth } from '../Middlewares/auth';
 const userRouter: express.Router = express.Router();
 
 
@@ -105,6 +106,62 @@ userRouter.post('/check', async (req: Request, res: Response)=>{
 
 })
 
+
+// get all organisations of a user
+userRouter.get('/all/org', auth, async (req: any, res: Response)=>{
+
+    const user = req.user;
+    try {
+        const organisations = await User.findById(user._id).populate('organisations');
+        res.status(200).json({
+            organisations
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            message: 'Internal server error',
+            error: error
+        })
+    }
+
+
+})
+
+// get all collections of a user
+userRouter.get('/all/coll', auth, async (req: any, res: Response)=>{
+    const user = req.user;
+    try {
+        const collections = await User.findById(user._id).populate('collections');
+        res.status(200).json({
+            collections
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            message: 'Internal server error',
+            error: error
+        })
+    }
+}
+)
+
+// get all O_requests of a user
+userRouter.get('/all/org/requests', auth, async (req: any, res: Response)=>{
+    const user = req.user;
+    try {
+        const requests = await User.findById(user._id).populate('O_requests');
+        res.status(200).json({
+            requests
+        })
+    }
+    catch(error){
+        res.status(500).json({
+            message: 'Internal server error',
+            error: error
+        })
+    }
+}
+)
 
 
 
