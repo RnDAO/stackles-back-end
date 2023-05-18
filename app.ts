@@ -36,7 +36,7 @@ app.listen(port, ()=>{
     console.log(`Server running at http://localhost:${port}/`);
 });
 
-const uri = 'mongodb://localhost:27017/stackles';
+const uri = 'mongodb+srv://divanshuprajapat2002:divanshu123@cluster0.k20yesv.mongodb.net/';
 
 
 
