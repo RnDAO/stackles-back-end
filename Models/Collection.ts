@@ -11,7 +11,7 @@ interface ICollection extends mongoose.Document {
     admins?: IUser[];
     members?: IUser[];
     items?: string[];
-    requests?: IUser[];
+    requests?: Map<IUser, String>; // Mapping of ICollection to string
 }
 
 // Define the schema
@@ -23,7 +23,8 @@ const CollectionSchema = new mongoose.Schema({
     admins: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     items: {type: [String]},
-    requests: [{type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+    requests: {type: Map, of: String},
+    
 });
 
 // Define the model

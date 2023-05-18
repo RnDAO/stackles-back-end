@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import dotenv from 'dotenv';
 import { IOrganisation } from "./Organisation";
 import { ICollection } from "./Collection";
-import { string } from "zod";
+
 
 require('dotenv').config();
 
@@ -18,7 +18,10 @@ interface IUser extends mongoose.Document {
     collections?: ICollection[];
     O_requests?: IOrganisation[];
     // array of collection requests to join like id -> admin or id-> member
-    C_requests?: [ICollection,string][];
+    // C_requests_admin?: ICollection[];
+    // C_requests_member?: ICollection[];
+    C_requests?: Map<ICollection, String>; // Mapping of ICollection to string
+
 
     generateAuthToken(): string;
 }
@@ -29,7 +32,10 @@ const UserSchema = new mongoose.Schema({
     email: {type: String, required: true, unique: true}, // also act as wallet address
     organisations: [{type: mongoose.Schema.Types.ObjectId, ref: 'Organisation' }],
     O_requests: [{type: mongoose.Schema.Types.ObjectId, ref: 'Organisation' }],
-    C_requests: [{type: [mongoose.Schema.Types.ObjectId,string], ref: 'Collection' }],
+    // C_requests_admin: [{type: mongoose.Schema.Types.ObjectId, ref: 'Collection' }],
+    // C_requests_member: [{type: mongoose.Schema.Types.ObjectId, ref: 'Collection' }],
+    C_requests: {type: Map, of: String},
+
     collections: [{type: mongoose.Schema.Types.ObjectId, ref: 'Collection' }]
 
 });

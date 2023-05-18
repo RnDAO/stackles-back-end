@@ -74,6 +74,37 @@ userRouter.get('/logout', async (req: Request, res: Response)=>{
 })
 
 
+// check if the user exists or not
+userRouter.post('/check', async (req: Request, res: Response)=>{
+    try {
+        const {email} = req.body;
+        if(!email){
+            res.status(400).json({
+                message: 'Bad request'
+            })
+        }else{
+            const user = await User.find({email: email});
+            // console.log(user);
+            if(user.length > 0){
+                res.status(200).json({
+                    message: 'User exists',
+                    user: user
+                })
+            }else{
+                res.status(200).json({
+                    message: 'User does not exist',
+                    // user: user
+                })
+            }
+
+        }
+        
+    } catch (error) {
+        
+    }
+
+})
+
 
 
 
