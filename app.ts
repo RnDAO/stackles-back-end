@@ -5,7 +5,7 @@ import orgRouter from './Routes/orgRoutes';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import collRouter from './Routes/collRoutes';
-
+import fileUpload from 'express-fileupload';
 // import apiRouter from './Routers/apiRoutes';
 
 const app: express.Application = express();
@@ -13,6 +13,11 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
 // cookie
+app.use(fileUpload(
+    {
+        useTempFiles: true,
+    }
+));
 app.use(cookieParser());
 const port: number = 3000;    
 

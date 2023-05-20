@@ -4,15 +4,33 @@ import {User, IUser} from '../Models/User';
 import {Organisation, IOrganisation} from '../Models/Organisation';
 import {auth} from '../Middlewares/auth';
 import { IGetUserAuthInfoRequest } from '../definition';
+import { v2 as cloudinary } from "cloudinary";
+
+
 const orgRouter: express.Router = express.Router();
 
 
-// create organisation route
+cloudinary.config({
+    cloud_name: "dkfjb8xsm",
+    api_key: "687961213743838",
+    api_secret: "iTxPxJdfWwCVRZs_6nmo3F4bEG4"
+  });
+  
 
+
+// create organisation route
 orgRouter.post('/create', auth, async (req: any, res: any)=>{
     try {
-        const {name} = req.body;
-        if(!name){
+        // get the name, avatar, use_case, range from the request body
+        const name = req.body.name;
+        const role = req.body.role;
+        const use_case = req.body.use_case;
+        const range = req.body.range;
+        // console.log(req.file, req.body);
+        // take the avatar from the request body as a file
+        const avatar = req.files.avatar;
+        // console.log(name, role, use_case, range,avatar);
+        if(!name || !use_case || !range){
             res.status(400).json({
                 message: 'Bad request'
             })
@@ -28,11 +46,33 @@ orgRouter.post('/create', auth, async (req: any, res: any)=>{
                 const newOrg = new Organisation({
                     name: name,
                     creator: user._id,
-                    admins : [user._id]
+                    admins : [{
+                        user: user._id,
+                        role: role
+                    }],
+                    range_of_members: range,
+                    use_case: use_case,
+                    no_of_members: 1
                 });
                 await newOrg.save();
                 user.organisations.push(newOrg._id);
-                await user.save();  
+                await user.save();
+                // check if the avatar exists
+                if(avatar){
+                    // upload the avatar to cloudinary and save the url in the database
+                    const result = await cloudinary.uploader.upload(avatar.tempFilePath,
+                        {
+                            public_id: `stackles/avatars/${newOrg._id}`,
+                        }
+    
+                        
+                        );
+                    newOrg.avatar = result.secure_url;
+                    await newOrg.save();
+                }
+
+
+
                 res.status(200).json({
                     newOrg,
                     message: 'Organisation created successfully'
