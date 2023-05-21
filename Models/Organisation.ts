@@ -20,6 +20,7 @@ interface IOrganisation extends mongoose.Document {
     // range of members
     range_of_members?: String;
     no_of_members?: Number;
+    description?: String;
     collections?: ICollection[];
     requests?: IUser[];
 }
@@ -34,6 +35,7 @@ const OrganisationSchema = new mongoose.Schema({
     }],
     range_of_members: {type: String, required: true},
     no_of_members: {type: Number, required: true},
+    description: {type: String},
     use_case: {type: String, required: true},
     
     collections: [{type: mongoose.Schema.Types.ObjectId, ref: 'Collection' }],

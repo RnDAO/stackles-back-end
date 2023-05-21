@@ -26,6 +26,7 @@ orgRouter.post('/create', auth, async (req: any, res: any)=>{
         const role = req.body.role;
         const use_case = req.body.use_case;
         const range = req.body.range;
+        const desc = req.body.description;
         // console.log(req.file, req.body);
         // take the avatar from the request body as a file
         const avatar = req.files.avatar;
@@ -52,7 +53,8 @@ orgRouter.post('/create', auth, async (req: any, res: any)=>{
                     }],
                     range_of_members: range,
                     use_case: use_case,
-                    no_of_members: 1
+                    no_of_members: 1,
+                    description: desc
                 });
                 await newOrg.save();
                 user.organisations.push(newOrg._id);
