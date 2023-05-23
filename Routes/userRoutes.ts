@@ -28,6 +28,7 @@ userRouter.post('/login',async (req: Request, res: Response)=>{
                 const options = {expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), httpOnly: true}; // 30 days
                 res.status(200).cookie('token', token, options).json({
                 newUser,
+                token,
                 message: 'user created and login successful'
                 })
             }
