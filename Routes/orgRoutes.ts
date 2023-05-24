@@ -30,11 +30,11 @@ orgRouter.post('/create', auth, async (req: any, res: any)=>{
         
         // console.log(req.file, req.body);
         // take the avatar from the request body as a file
-        const avatar = req.files.avatar;
-        // console.log(name, role, use_case, range,avatar);
-        if(!name || !use_case || !range){
+        // const avatar = req.files.avatar;
+        console.log(name, role, use_case, range, desc);
+        if(!name || !use_case || !range || !role || !desc){
             res.status(400).json({
-                message: 'Bad request'
+                message: 'plz fill all the fields'
             })
         }else{
             if(!req.user){
@@ -61,18 +61,18 @@ orgRouter.post('/create', auth, async (req: any, res: any)=>{
                 user.organisations.push(newOrg._id);
                 await user.save();
                 // check if the avatar exists
-                if(avatar){
-                    // upload the avatar to cloudinary and save the url in the database
-                    const result = await cloudinary.uploader.upload(avatar.tempFilePath,
-                        {
-                            public_id: `stackles/avatars/${newOrg._id}`,
-                        }
+                // if(avatar && avatar.tempFilePath){
+                //     // upload the avatar to cloudinary and save the url in the database
+                //     const result = await cloudinary.uploader.upload(avatar.tempFilePath,
+                //         {
+                //             public_id: `stackles/avatars/${newOrg._id}`,
+                //         }
     
                         
-                        );
-                    newOrg.avatar = result.secure_url;
-                    await newOrg.save();
-                }
+                //         );
+                //     newOrg.avatar = result.secure_url;
+                //     await newOrg.save();
+                // }
 
 
 

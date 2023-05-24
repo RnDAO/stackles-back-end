@@ -21,7 +21,7 @@ const auth = async (req : any, res: any, next: any)=>{
     res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials (cookies, headers) to be sent with requests
       // console.log(req.cookies);
       const token = req.cookies.token;
-      // console.log(token);
+      console.log(token);
       if(!token){
           res.status(401).json({
               message: 'Unauthorized'
@@ -30,7 +30,8 @@ const auth = async (req : any, res: any, next: any)=>{
       else{
         const decoded : any = jwt.verify(token, JWT_SECRET);
         const email: string   = decoded.email;
-        // console.log(email);
+        console.log(decoded);
+        console.log(email);
         if(email){
           // find user by email 
           const user = await User.findOne({email: email});
