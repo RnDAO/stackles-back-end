@@ -1,7 +1,8 @@
-import express from 'express';
+import express, {CookieOptions} from 'express';
 import { Request, Response } from 'express';
 import {User, IUser} from '../Models/User';
 import { auth } from '../Middlewares/auth';
+
 const userRouter: express.Router = express.Router();
 
 
@@ -25,7 +26,13 @@ userRouter.post('/login',async (req: Request, res: Response)=>{
                 });
                 await newUser.save();
                 const token = await newUser.generateAuthToken();
-                const options = {expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), httpOnly: true}; // 30 days
+                const options : CookieOptions = {
+                    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: 'none',
+
+                }; // 30 days
                 res.status(200).cookie('token', token, options).json({
                 newUser,
                 token,
@@ -52,6 +59,7 @@ userRouter.post('/login',async (req: Request, res: Response)=>{
     
     
 })
+
 
 
 // logout route
