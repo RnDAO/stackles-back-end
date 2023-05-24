@@ -12,7 +12,13 @@ import { IGetUserAuthInfoRequest } from '../definition';
 
 const JWT_SECRET = "alwaysnoteverything";
 const auth = async (req : any, res: any, next: any)=>{
-     try {
+
+  
+  try {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); // Replace with the origin of your frontend application
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials (cookies, headers) to be sent with requests
       // console.log(req.cookies);
       const token = req.cookies.token;
       // console.log(token);
