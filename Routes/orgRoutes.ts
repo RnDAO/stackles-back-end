@@ -27,6 +27,7 @@ orgRouter.post('/create', auth, async (req: any, res: any)=>{
         const use_case = req.body.use_case;
         const range = req.body.range;
         const desc = req.body.description;
+        
         // console.log(req.file, req.body);
         // take the avatar from the request body as a file
         const avatar = req.files.avatar;

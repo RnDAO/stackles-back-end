@@ -8,6 +8,8 @@ import { IGetUserAuthInfoRequest } from '../definition';
 //   user: IUser | null | undefined;
 // }
 
+
+
 const JWT_SECRET = "alwaysnoteverything";
 const auth = async (req : any, res: any, next: any)=>{
      try {
