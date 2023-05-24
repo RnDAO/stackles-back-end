@@ -30,7 +30,9 @@ userRouter.post('/login',async (req: Request, res: Response)=>{
                     expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 
                     httpOnly: true,
                     secure: true,
-                    sameSite: 'none',
+                    sameSite: "none",
+                    path: "/",
+                    domain: "https://stackles-back-end.onrender.com"
 
                 }; // 30 days
                 res.status(200).cookie('token', token, options).json({
