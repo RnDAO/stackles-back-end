@@ -7,11 +7,14 @@ interface ICollection extends mongoose.Document {
     name: string;
     creator: IUser;
     organisation: IOrganisation;
-    description :string;
+    //type will be either private or team
+    type: string; 
+
+    // description :string;
     admins?: IUser[];
     members?: IUser[];
-    items?: string[];
-    requests?: Map<IUser, String>; // Mapping of ICollection to string
+    // items?: string[];
+    // requests?: Map<IUser, String>; // Mapping of ICollection to string
 }
 
 // Define the schema
@@ -19,11 +22,12 @@ const CollectionSchema = new mongoose.Schema({
     name: {type: String, required: true},
     creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     organisation: {type: mongoose.Schema.Types.ObjectId, ref: 'Organisation', required: true},
-    description: {type: String, required: true},
+    type: {type: String, required: true},
+    // description: {type: String, required: true},
     admins: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    items: {type: [String]},
-    requests: {type: Map, of: String},
+    // items: {type: [String]},
+    // requests: {type: Map, of: String},
     
 });
 
