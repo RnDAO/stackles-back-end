@@ -27,7 +27,7 @@ userRouter.post('/login',async (req: Request, res: Response)=>{
                 await newUser.save();
                 const token = await newUser.generateAuthToken();
                 const options : CookieOptions = {
-                    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), 
+                    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
                     httpOnly: true,
                     secure: true,
                     sameSite: "none",

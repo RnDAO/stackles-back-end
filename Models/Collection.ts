@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { IUser } from "./User";
 import { IOrganisation } from "./Organisation";
+import { ILink } from "./Link";
 
 // Define the User interface
 interface ICollection extends mongoose.Document {
@@ -13,6 +14,7 @@ interface ICollection extends mongoose.Document {
     // description :string;
     admins?: IUser[];
     members?: IUser[];
+    links?: ILink[];
     // items?: string[];
     // requests?: Map<IUser, String>; // Mapping of ICollection to string
 }
@@ -28,6 +30,7 @@ const CollectionSchema = new mongoose.Schema({
     members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     // items: {type: [String]},
     // requests: {type: Map, of: String},
+    links: [{type: mongoose.Schema.Types.ObjectId, ref: 'Link'}],
     
 });
 

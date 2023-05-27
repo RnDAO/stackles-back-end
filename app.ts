@@ -6,6 +6,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import collRouter from './Routes/collRoutes';
 import fileUpload from 'express-fileupload';
+import { linkRouter } from './Routes/linkRoutes';
 // import apiRouter from './Routers/apiRoutes';
 
 const app: express.Application = express();
@@ -46,7 +47,7 @@ app.get('/', (req: express.Request, res: express.Response)=>{
 app.use('/user',userRouter);
 app.use ('/org', orgRouter);
 app.use('/coll',collRouter);
-
+app.use('/link', linkRouter);
 
 
 
