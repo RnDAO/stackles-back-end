@@ -13,6 +13,7 @@ const linkRouter : express.Router = express.Router();
 linkRouter.post('/create/:id', auth, async (req : any, res : any) => {
 
     try {
+        
         const url = req.body.url;
         const title = req.body.title;
         const tags = req.body.tags;
@@ -35,23 +36,33 @@ linkRouter.post('/create/:id', auth, async (req : any, res : any) => {
             return res.status(400).json({msg: 'Please enter all fields'});
         }
         const newLink = {
+            // name: name,
             link: url,
             title: title,
             tags: tags,
             description: description,
-            creator: creator,
-            coll: coll
+            creator: creator._id,
+            coll: coll._id
         };
-        
+        // console.log(newLink);
         const link = await new Link(newLink);
         await link.save();
         if(!coll.links) {
-            coll.links = [link];
+            coll.links = [link._id];
         }
         else{
-            coll.links.push(link);
+            coll.links.push(link._id);
         }
         await coll.save();
+
+        // save the link in the creator's links array
+        if(!creator.links) {
+            creator.links = [link._id];
+        }
+        else{
+            creator.links.push(link._id);
+        }
+        creator.save();
         res.status(200).json({
             msg: 'Link added successfully',
             link: link

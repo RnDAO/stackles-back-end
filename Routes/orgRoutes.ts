@@ -97,16 +97,16 @@ orgRouter.post('/create', auth, async (req: any, res: any)=>{
 
 orgRouter.get('/all', auth, async (req: any, res: any)=>{
     try {
-        // const user   = req.user;
-        // const organisations = await Organisation.find({_id: {$in: user.organisations}});
-        // find user by id and populate the organisations
-        // also populate the collections of the organisations
-        const user = await User.findById(req.user._id).populate('organisations');
-       
-        // console.log(user);
+    
+
+    const user = req.user;
+   
+    // populate the organisations and collections of the user
+    const user2 = await User.findById(user._id).populate('organisations').populate('collections');
+        
 
         res.status(200).json({
-            user,
+            user2,
             message: 'Organisations fetched successfully'
         })
     } catch (error) {

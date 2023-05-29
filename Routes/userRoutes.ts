@@ -176,6 +176,37 @@ userRouter.get('/all/org/requests', auth, async (req: any, res: Response)=>{
 )
 
 
+// get all links of a user
+userRouter.get('/links/all', auth, async (req: any, res: Response)=>{
+
+    try {
+
+        const user = req.user;
+        const links = await User.findById(user._id).populate('links');
+        const actual = links?.links;
+        if(!actual){
+            return res.status(404).json({
+                message: 'Links not found'
+            })
+        }
+        
+        res.status(200).json({
+            message : 'Links fetched successfully',
+            links: actual
+        })
+
+
+        
+    } catch (error) {
+        res.status(500).json({
+            message: 'Internal server error',
+            error: error
+        })
+
+    }
+
+
+})
 
 
 export default userRouter;

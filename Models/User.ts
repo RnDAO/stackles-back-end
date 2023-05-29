@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import dotenv from 'dotenv';
 import { IOrganisation } from "./Organisation";
 import { ICollection } from "./Collection";
+import { ILink } from "./Link";
 
 
 require('dotenv').config();
@@ -17,11 +18,10 @@ interface IUser extends mongoose.Document {
     organisations?: IOrganisation[];
     collections?: ICollection[];
     O_requests?: IOrganisation[];
-    // array of collection requests to join like id -> admin or id-> member
-    // C_requests_admin?: ICollection[];
-    // C_requests_member?: ICollection[];
+   
     C_requests?: Map<ICollection, String>; // Mapping of ICollection to string
 
+    links?: ILink[];
 
     generateAuthToken(): string;
 }
@@ -35,7 +35,7 @@ const UserSchema = new mongoose.Schema({
     // C_requests_admin: [{type: mongoose.Schema.Types.ObjectId, ref: 'Collection' }],
     // C_requests_member: [{type: mongoose.Schema.Types.ObjectId, ref: 'Collection' }],
     C_requests: {type: Map, of: String},
-
+    links: [{type: mongoose.Schema.Types.ObjectId, ref: 'Link' }],
     collections: [{type: mongoose.Schema.Types.ObjectId, ref: 'Collection' }]
 
 });

@@ -4,7 +4,7 @@ import { ICollection } from "./Collection";
 
 
 interface ILink extends mongoose.Document {
-
+    // name : string;
     link : string; // as the url of the link
     title : string; // as the title of the link
     tags : string[]; // as the tags of the link
@@ -15,6 +15,7 @@ interface ILink extends mongoose.Document {
 
 
 const LinkSchema = new mongoose.Schema({
+    // name : {type: String, required: true},
     link : {type: String, required: true},
     title : {type: String, required: true},
     tags : [{type: String}],
