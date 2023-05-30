@@ -209,4 +209,29 @@ userRouter.get('/links/all', auth, async (req: any, res: Response)=>{
 })
 
 
+// get all details of a user by populating all the fields
+userRouter.get('/all/details', auth, async (req: any, res: Response)=>{
+
+    try {
+        const user = req.user;
+        // populate organisations, collections, and links
+        const details = await User.findById(user._id).populate('organisations').populate('collections').populate('links');
+        res.status(200).json({
+            message: 'Details fetched successfully',
+            details
+        })
+
+        
+    } catch (error) {
+        res.status(500).json({
+            message: 'Internal server error',
+            error: error
+        })
+        
+    }
+
+})
+
+
+
 export default userRouter;
