@@ -23,7 +23,7 @@ app.use(cors(
   {
     origin: 'https://stackels.vercel.app',
     methods: 'GET, POST, PUT, DELETE',
-    allowedHeaders: ['Content-Type, Authorization'],
+    allowedHeaders: 'Content-Type, Authorization',
     // header: 'Content-Type, Authorization',
     credentials: true // Allow credentials (cookies, headers) to be sent with requests
   }
