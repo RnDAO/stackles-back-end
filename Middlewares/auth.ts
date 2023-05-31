@@ -16,7 +16,7 @@ const auth = async (req : any, res: any, next: any)=>{
   
   try {
     res.setHeader('Access-Control-Allow-Origin', 'https://stackels.vercel.app'); // Replace with the origin of your frontend application
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');// 
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials (cookies, headers) to be sent with requests
       // console.log(req.cookies);

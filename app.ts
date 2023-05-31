@@ -73,6 +73,8 @@ mongoose.connect(uri, {
     console.error('Error connecting to MongoDB:', err.message);
   });
 
+module.exports = app;
+
 
 
 
