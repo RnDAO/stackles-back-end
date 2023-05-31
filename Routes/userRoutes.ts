@@ -29,10 +29,10 @@ userRouter.post('/login',async (req: Request, res: Response)=>{
                 const options : CookieOptions = {
                     expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
                     httpOnly: true,
-                    secure: true,
-                    sameSite: "none",
+                    secure: false,
+                    // sameSite: "none",
                     // path: "/",
-                    domain: "http://localhost:3000"
+                    // domain: "https://stackels.vercel.app"
 
                 }; // 30 days
                 res.status(200).cookie('token', token, options).json({
@@ -43,7 +43,15 @@ userRouter.post('/login',async (req: Request, res: Response)=>{
             }
             else{
                 const token = await user.generateAuthToken();
-                const options = {expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), httpOnly: true};
+                const options : CookieOptions = {
+                    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
+                    httpOnly: true,
+                    secure: false,
+                    // sameSite: "none",
+                    // path: "/",
+                    // domain: "https://stackels.vercel.app"
+
+                }; // 30 days
                 res.status(200).cookie('token', token, options).json({
                 user,
                 token,
