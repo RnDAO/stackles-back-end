@@ -32,7 +32,7 @@ userRouter.post('/login',async (req: Request, res: Response)=>{
                     secure: true,
                     sameSite: "none",
                     path: "/",
-                    domain: "http://localhost:3000"
+                    domain: "https://stackels.vercel.app"
 
                 }; // 30 days
                 res.status(200).cookie('token', token, options).json({
