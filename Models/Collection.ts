@@ -17,6 +17,10 @@ interface ICollection extends mongoose.Document {
     links?: ILink[];
     // items?: string[];
     // requests?: Map<IUser, String>; // Mapping of ICollection to string
+
+    tokenName?: string;
+    tokenMintAddress?: string;
+    tokenAmount?: string;
 }
 
 // Define the schema
@@ -31,6 +35,10 @@ const CollectionSchema = new mongoose.Schema({
     // items: {type: [String]},
     // requests: {type: Map, of: String},
     links: [{type: mongoose.Schema.Types.ObjectId, ref: 'Link'}],
+
+    tokenName: {type: String},
+    tokenMintAddress: {type: String},
+    tokenAmount: {type: String}
     
 });
 

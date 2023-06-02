@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import {User, IUser} from '../Models/User';
 import jwt from 'jsonwebtoken';
 import { IGetUserAuthInfoRequest } from '../definition';
+import { frontendUrl } from '../app';
 
 
 // interface AuthenticatedRequest extends Request {
@@ -13,9 +14,8 @@ import { IGetUserAuthInfoRequest } from '../definition';
 const JWT_SECRET = "alwaysnoteverything";
 const auth = async (req : any, res: any, next: any)=>{
 
-  
   try {
-    res.setHeader('Access-Control-Allow-Origin', 'https://stackels.vercel.app'); // Replace with the origin of your frontend application
+    res.setHeader('Access-Control-Allow-Origin',frontendUrl); // Replace with the origin of your frontend application
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');// 
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials (cookies, headers) to be sent with requests
@@ -29,7 +29,7 @@ const auth = async (req : any, res: any, next: any)=>{
      
       
       else{
-        const token = authorizationHeader.slice(7); // Remove 'Bearer ' prefix
+        const token  = authorizationHeader.slice(7); // Remove 'Bearer ' prefix
         const decoded : any = jwt.verify(token, JWT_SECRET);
         const email: string   = decoded.email;
         // console.log(decoded);

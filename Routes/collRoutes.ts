@@ -13,12 +13,13 @@ const collRouter : express.Router = express.Router();
 collRouter.post('/create/:id',auth, async (req: any, res: any)=>{
         
         try {
-            const {name, type} = req.body;
+            const {name, type, tokenName,tokenMintAddress, tokenAmount} = req.body;
             const org = req.params.id;
-            console.log(name, type, org, req.user._id);
-            if(!name || !type){
+            
+            // console.log(name, type, org, req.user._id);
+            if(!name || !type || !tokenAmount || !tokenMintAddress || !tokenName){
                 res.status(400).json({
-                    message: 'Bad request'
+                    message: 'Bad request - name, type, tokenName, tokenMintAddress, tokenAmount are required'
                 })
             }else{
                // check if collection already exists
@@ -51,7 +52,10 @@ collRouter.post('/create/:id',auth, async (req: any, res: any)=>{
                                 creator : req.user._id,
                                 organisation: organisation._id,
                                type: type,
-                                admins : [req.user._id]
+                                admins : [req.user._id],
+                                tokenName: tokenName,
+                                tokenMintAddress: tokenMintAddress,
+                                tokenAmount: tokenAmount
 
                             });
                             await newCollection.save();
